@@ -1,0 +1,26 @@
+group 'iijs'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+mainClassName = "iijs.Iijs"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.6.0-alpha-2'
+}
+
+task extract(type: Copy) {
+	dependsOn distZip
+	from zipTree(distZip.outputs.files.singleFile)
+	destinationDir distZip.outputs.files.singleFile.parentFile
+}
+
+assemble.dependsOn extract
